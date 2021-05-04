@@ -1,23 +1,20 @@
-group = ["alice", "bob", "charlie", "Dylan"]
+group = []
 
 while true 
-  puts "There are #{group.length} members in that group"
-  puts "press 1 to add a member to the group"
-  puts "Press 2 display a random group"
-  puts "Press 3 to select random user"
-  puts "Press 4 to quit"
+  puts "There are #{group.length == 1 ? '1 member' : group.length.to_s + ' members'} in the group"
+  puts "Press 1) to add a member to the group"
+  puts "Press 2) display a random group"
+  puts "Press 3) to select random user"
+  puts "Press 4) to quit"
 
     #take input from user
   menu_input = gets.chomp.to_i
 
-
   case menu_input
-
   when 1
     puts "Enter name:"
     name = gets.chomp
     group.push(name)
-    pp group
 
   when 2
     puts "Random group output:"
@@ -50,13 +47,12 @@ while true
     end
 
   when 3 
-    puts "the random user is #{group.sample.capitalize}"
+    puts "The random user is #{group.sample.capitalize}"
 
   when 4
     puts "type yes to quit"
-    quit_choice = gets.chomp.to_i
-    break if quit_choice == "yes"
-
+    quit_choice = gets.chomp.downcase
+    break if quit_choice == 'yes'
   else
     puts "Invalid input, please try again"
   end
