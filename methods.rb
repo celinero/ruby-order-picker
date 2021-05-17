@@ -1,4 +1,6 @@
 # puts "Loaded up the methods file"
+require "colorize"
+require "espeak"
 
 def output_group_size(number)
   if number == 1
@@ -21,10 +23,18 @@ def menu_input_select
 end
 
 def output_random_group_order(collection)
-  collection.shuffle.each do |name|
-    puts capitalize_multi_word_string(name)
+  collection.shuffle.each do |name, index|
+    puts "#{index + 1}. #{capitalize_multi_word_string(name)}".colorize(select_random_color)
+    sleep (1)
+    Espeak::Speech.new(name).speak
   end
 end
+
+def select_random_color
+  colours = String.colors.dup - [:black, :light_black]
+  return colours.sample
+end
+
 
 def add_member_to_group(arr)
   puts "Enter name:"
@@ -38,4 +48,18 @@ def capitalize_multi_word_string(str)
   capitalised_array = arr.map { |word| word.capitalize}
   capitalised_string = capitalised_array.join(" ")
   return capitalised_string
+end
+
+def wait_clear(time)
+  sleep(time)
+  system "clear"
+end
+
+def quit_program
+  puts "type yes to quit"
+    quit_choice = gets.chomp.downcase
+    if quit_choice == "yes"
+      puts "thanks for using group generator 9000"
+      exit
+    end
 end
